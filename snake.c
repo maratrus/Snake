@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <unistd.h>
-#include <stdint.h> // Подключаем для использования int32_t
-#include <ctype.h>  // Для функции tolower
+#include <stdint.h> 
+#include <ctype.h> 
 
 #define MAX_X 15
 #define MAX_Y 15
@@ -11,7 +11,7 @@
 #define LEFT -1
 #define UP 2
 #define DOWN -2
-#define CONTROLS 4 // Определяем количество элементов управления
+#define CONTROLS 4 
 
 typedef struct tail_t {
     int x;
@@ -23,18 +23,17 @@ typedef struct snake_t {
     int y;
     struct tail_t* tail;
     size_t tsize;
-    int direction; // Здесь хранится текущее направление змейки
+    int direction; // Р—РґРµСЃСЊ С…СЂР°РЅРёС‚СЃСЏ С‚РµРєСѓС‰РµРµ РЅР°РїСЂР°РІР»РµРЅРёРµ Р·РјРµР№РєРё
 } snake_t;
 
 typedef struct control_button {
-    char key; // Клавиша
-    int direction; // Направление
+    char key; // РєР»Р°РІРёС€Р°
+    int direction; // РќР°РїСЂР°РІР»РµРЅРёРµ
 } control_button;
 
-// Объявляем функцию checkDirection до ее использования в processInput
 int checkDirection(snake_t* snake, int32_t key);
 
-// Управляющие кнопки
+// РєРЅРѕРїРєРё СѓРїСЂР°РІР»РµРЅРёСЏ
 control_button default_controls[CONTROLS] = {
     {'w', UP},
     {'s', DOWN},
@@ -42,13 +41,13 @@ control_button default_controls[CONTROLS] = {
     {'d', RIGHT}
 };
 
-// Инициализация змейки
+// РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р·РјРµР№РєРё
 snake_t initSnake(int x, int y, size_t tsize) {
     snake_t snake;
     snake.x = x;
     snake.y = y;
     snake.tsize = tsize;
-    snake.direction = RIGHT; // Начальное направление
+    snake.direction = RIGHT; // РР·РЅР°С‡Р°Р»СЊРЅРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ
     snake.tail = (tail_t*)malloc(sizeof(tail_t) * 100);
     for (int i = 0; i < tsize; ++i) {
         snake.tail[i].x = x + i + 1;
@@ -57,7 +56,6 @@ snake_t initSnake(int x, int y, size_t tsize) {
     return snake;
 }
 
-// Печать змейки
 void printSnake(snake_t snake) {
     char matrix[MAX_X][MAX_Y];
     for (int i = 0; i < MAX_X; ++i) {
@@ -79,36 +77,36 @@ void printSnake(snake_t snake) {
     }
 }
 
-// Проверка корректности направления
+// РџСЂРѕРІРµСЂРєР° РЅР°РїСЂР°РІР»РµРЅРёСЏ
 int checkDirection(snake_t* snake, int32_t key) {
     switch (snake->direction) {
         case RIGHT:
             if (key == LEFT) {
-                return 0; // недопустимо
+                return 0; // РЅРµРґРѕРїСѓСЃС‚РёРјРѕ
             }
             break;
         case LEFT:
             if (key == RIGHT) {
-                return 0; // недопустимо
+                return 0; // РЅРµРґРѕРїСѓСЃС‚РёРјРѕ
             }
             break;
         case UP:
             if (key == DOWN) {
-                return 0; // недопустимо
+                return 0; // РЅРµРґРѕРїСѓСЃС‚РёРјРѕ
             }
             break;
         case DOWN:
             if (key == UP) {
-                return 0; // недопустимо
+                return 0; // РЅРµРґРѕРїСѓСЃС‚РёРјРѕ
             }
             break;
         default:
-            return 1; // допустимо, если направление не задано
+            return 1; // РґРѕРїСѓСЃС‚РёРјРѕ , РµСЃР»Рё РЅР°РїСЂР°РІР»РµРЅРёРµ РЅРµ Р·Р°РґР°РЅРЅРѕ
     }
-    return 1; // допустимо
+    return 1; // РґРѕРїСѓСЃС‚РёРјРѕ
 }
 
-// Движение змейки влево
+// РґРІРёР¶РµРЅРёРµ Р·РјРµР№РєРё РІР»РµРІРѕ
 snake_t moveLeft(snake_t snake) {
     for (int i = snake.tsize - 1; i > 0; i--) {
         snake.tail[i] = snake.tail[i - 1];
@@ -123,7 +121,7 @@ snake_t moveLeft(snake_t snake) {
     return snake;
 }
 
-// Движение змейки вправо
+// РґРІРёР¶РµРЅРёРµ Р·РјРµР№РєРё РІРїСЂР°РІРѕ
 snake_t moveRight(snake_t snake) {
     for (int i = snake.tsize - 1; i > 0; i--) {
         snake.tail[i] = snake.tail[i - 1];
@@ -138,7 +136,7 @@ snake_t moveRight(snake_t snake) {
     return snake;
 }
 
-// Движение змейки вверх
+// РґРІРёР¶РµРЅРёРµ Р·РјРµР№РєРё РІРІРІРµСЂС…
 snake_t moveUp(snake_t snake) {
     for (int i = snake.tsize - 1; i > 0; i--) {
         snake.tail[i] = snake.tail[i - 1];
@@ -154,7 +152,7 @@ snake_t moveUp(snake_t snake) {
     return snake;
 }
 
-// Движение змейки вниз
+// РґРІРёР¶РµРЅРёРµ Р·РјРµР№РєРё РІРЅРёР·
 snake_t moveDown(snake_t snake) {
     for (int i = snake.tsize - 1; i > 0; i--) {
         snake.tail[i] = snake.tail[i - 1];
@@ -169,14 +167,14 @@ snake_t moveDown(snake_t snake) {
     return snake;
 }
 
-// Обработка ввода
+// РѕР±СЂР°Р±РѕС‚РєР° РІРІРѕРґР°
 void processInput(snake_t* snake) {
     if (_kbhit()) {
         int key = _getch();
-        key = tolower(key); // Приводим к нижнему регистру
+        key = tolower(key); // РџСЂРёРІРѕРґРёРј Рє РЅРёР¶РЅРµРјСѓ СЂРµРіРёСЃС‚СЂСѓ
         int newDirection = 0;
 
-        // Проверяем все управляющие кнопки
+        // РџСЂРѕРІРµСЂСЏРµРј РєРЅРѕРїРєРё
         for (int i = 0; i < CONTROLS; i++) {
             if (key == default_controls[i].key) {
                 newDirection = default_controls[i].direction;
@@ -185,18 +183,18 @@ void processInput(snake_t* snake) {
         }
 
         if (checkDirection(snake, newDirection)) {
-            snake->direction = newDirection; // Изменяем направление
+            snake->direction = newDirection; // РР·РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ
         }
     }
 }
 
-// Основная функция
+// РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 int main() {
     snake_t snake = initSnake(10, 5, 2);
     printSnake(snake);
     while (1) {
-        processInput(&snake); // Обработка ввода
-        switch (snake.direction) { // Движение в зависимости от текущего направления
+        processInput(&snake); // РѕР±СЂР°Р±РѕС‚РєР° РІРІРѕРґР°
+        switch (snake.direction) { // РґРІРёР¶РµРЅРёРµ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РµРєСѓС‰РµРіРѕ РЅР°РїСЂР°РІР»РµРЅРёСЏ
             case LEFT:
                 snake = moveLeft(snake);
                 break;
