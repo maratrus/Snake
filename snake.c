@@ -7,7 +7,7 @@
 
 #define MAX_X 15
 #define MAX_Y 15
-#define CONTROLS 4 // У нас 4 кнопки для управления
+#define CONTROLS 4 
 
 typedef struct tail_t {
     int x;
@@ -19,20 +19,20 @@ typedef struct snake_t {
     int y;
     struct tail_t* tail;
     size_t tsize;
-    int direction; // Добавляем направление
+    int direction; // Р”РѕР±Р°РІР»СЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ
 } snake_t;
 
 typedef struct control_buttons {
-    char key;       // Клавиша управления
-    int direction;  // Направление: 0 - влево, 1 - вправо, 2 - вверх, 3 - вниз
+    char key;       // РљР»Р°РІРёС€Р° СѓРїСЂР°РІР»РµРЅРёСЏ
+    int direction;  // РЅР°РїСЂР°РІР»РµРЅРёСЏ
 } control_buttons;
 
-// Определяем массив управления
+// РћРїСЂРµРґРµР»СЏРµРј РјР°СЃСЃРёРІ СѓРїСЂР°РІР»РµРЅРёСЏ
 control_buttons default_controls[CONTROLS] = {
-    {'a', 0}, // LEFT
-    {'d', 1}, // RIGHT
-    {'w', 2}, // UP
-    {'s', 3}  // DOWN
+    {'a', 0}, // Р›РµРІРѕ
+    {'d', 1}, // РџСЂР°РІРѕ
+    {'w', 2}, // РќР°РІРµСЂС…
+    {'s', 3}  // Р’РЅРёР·
 };
 
 snake_t initSnake(int x, int y, size_t tsize) {
@@ -45,7 +45,7 @@ snake_t initSnake(int x, int y, size_t tsize) {
         snake.tail[i].x = x + i + 1;
         snake.tail[i].y = y;
     }
-    snake.direction = 1; // Начнем движение вправо
+    snake.direction = 1; // РќР°С‡РЅРµРј РґРІРёР¶РµРЅРёРµ РІРїСЂР°РІРѕ
     return snake;
 }
 
@@ -71,13 +71,13 @@ void printSnake(snake_t snake) {
 }
 
 int checkDirection(snake_t* snake, int newDirection) {
-    // Запрещаем перемещения, которые приводят к столкновению с хвостом
-    if (newDirection == 0 && snake->direction == 1) return 0; // НЕ разрешаем из вправо в влево
-    if (newDirection == 1 && snake->direction == 0) return 0; // НЕ разрешаем из влево в вправо
-    if (newDirection == 2 && snake->direction == 3) return 0; // НЕ разрешаем из вверх в вниз
-    if (newDirection == 3 && snake->direction == 2) return 0; // НЕ разрешаем из вниз в вверх
+    // Р—Р°РїСЂРµС‰РІРµРј РїРµСЂРµРјРµС‰РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Рµ РїСЂРёРІРѕРґСЏС‚ Рє СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЋ СЃ С…РІРѕСЃС‚РѕРј
+    if (newDirection == 0 && snake->direction == 1) return 0;
+    if (newDirection == 1 && snake->direction == 0) return 0;
+    if (newDirection == 2 && snake->direction == 3) return 0;
+    if (newDirection == 3 && snake->direction == 2) return 0; 
 
-    return 1; // Разрешаем изменение направления
+    return 1;
 }
 
 snake_t moveLeft(snake_t snake) {
@@ -89,7 +89,7 @@ snake_t moveLeft(snake_t snake) {
 
     snake.x = snake.x - 1;
     if (snake.x < 0) {
-        snake.x = MAX_X - 1; // Змейка "перескакивает" с одного края на другой
+        snake.x = MAX_X - 1; // Р—РјРµР№РєР° РїРµСЂРµС…РѕРґРёС‚ СЃ РѕРґРЅРѕРіРѕ РєСЂР°СЏ РЅР° РґСЂСѓРіРѕР№
     }
     return snake;
 }
@@ -103,7 +103,7 @@ snake_t moveRight(snake_t snake) {
 
     snake.x = snake.x + 1;
     if (snake.x >= MAX_X) {
-        snake.x = 0; // Змейка "перескакивает" с одного края на другой
+        snake.x = 0; // Р—РјРµР№РєР° РїРµСЂРµС…РѕРґРёС‚ СЃ РѕРґРЅРѕРіРѕ РєСЂР°СЏ РЅР° РґСЂСѓРіРѕР№
     }
     return snake;
 }
@@ -118,7 +118,7 @@ snake_t moveUp(snake_t snake) {
     snake.y = snake.y - 1;
     if (snake.y < 0) {
 
-        snake.y = MAX_Y - 1; // Змейка "перескакивает" с одного края на другой
+        snake.y = MAX_Y - 1; // Р—РјРµР№РєР° РїРµСЂРµС…РѕРґРёС‚ СЃ РѕРґРЅРѕРіРѕ РєСЂР°СЏ РЅР° РґСЂСѓРіРѕР№
     }
     return snake;
 }
@@ -132,7 +132,7 @@ snake_t moveDown(snake_t snake) {
 
     snake.y = snake.y + 1;
     if (snake.y >= MAX_Y) {
-        snake.y = 0; // Змейка "перескакивает" с одного края на другой
+        snake.y = 0; // Р—РјРµР№РєР° РїРµСЂРµС…РѕРґРёС‚ СЃ РѕРґРЅРѕРіРѕ РєСЂР°СЏ РЅР° РґСЂСѓРіРѕР№
     }
     return snake;
 }
@@ -140,7 +140,7 @@ snake_t moveDown(snake_t snake) {
 void processInput(snake_t* snake) {
     if (_kbhit()) {
         char key = _getch();
-        key = tolower(key); // Приводим к нижнему регистру
+        key = tolower(key); // РџСЂРёРІРѕРґРёРј Рє РЅРёР¶РЅРµРјСѓ СЂРµРіРёСЃС‚СЂСѓ
         int newDirection = -1;
 
         for (int i = 0; i < CONTROLS; i++) {
@@ -151,18 +151,18 @@ void processInput(snake_t* snake) {
         }
 
         if (newDirection != -1 && checkDirection(snake, newDirection)) {
-            snake->direction = newDirection; // Изменяем направление
+            snake->direction = newDirection; // РР·РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ
         }
     }
 }
 
-// Основная функция
+// РћСЃРЅРѕРІРЅР°СЏ С„СѓРЅРєС†РёСЏ
 int main() {
     snake_t snake = initSnake(10, 5, 2);
     printSnake(snake);
 
     while (1) {
-        processInput(&snake); // Обработка ввода
+        processInput(&snake);
 
         switch (snake.direction) {
             case 0:
@@ -179,7 +179,7 @@ int main() {
                 break;
         }
 
-        usleep(100000); // Задержка в 100 мс
+        usleep(100000);
         system("cls");
         printSnake(snake);
     }
